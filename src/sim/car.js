@@ -14,7 +14,9 @@ Car.prototype.create = function() {
     var boxBd = new b2BodyDef();
     boxBd.AddShape(boxDef);
     boxBd.position.Set(250,height);
-    this.body = this.world.AddSimObject(new SimObject(boxBd));
+    var body = new SimObject(boxBd);
+    this.world.AddSimObject(body);
+    this.body = body;
     
     // Add the wheels
     var ballDef = new b2CircleDef();
@@ -22,18 +24,21 @@ Car.prototype.create = function() {
     ballDef.radius = 20;
     ballDef.restitution = 0.1;
     ballDef.friction = 10;
-    wheel1 = new b2BodyDef();
-    wheel1.AddShape(ballDef);
-    wheel1.position.Set(210, height + 20);
-    _w1 = this.world.AddSimObject(new SimObject(wheel1));
-    wheel1.position.Set(290, height + 20);
-    _w2 = this.world.AddSimObject(new SimObject(wheel1));
+    wheel = new b2BodyDef();
+    wheel.AddShape(ballDef);
+    wheel.position.Set(210, height + 20);
+    wheel1 = new SimObject(wheel);
+    this.world.AddSimObject(wheel1);
+    console.log(wheel1.b2Body);
+    wheel.position.Set(290, height + 20);
+    wheel2 = new SimObject(wheel);
+    this.world.AddSimObject(wheel2);
 
     // Add the joints between the body and the wheels
     var jointDef = new b2RevoluteJointDef();
     jointDef.anchorPoint.Set(210, height + 20);
-    jointDef.body1 = this.body;
-    jointDef.body2 = _w1
+    jointDef.body1 = body.b2Body;
+    jointDef.body2 = wheel1.b2Body;
     jointDef.motorSpeed = 20;
     jointDef.motorTorque = 50000000;
     jointDef.enableMotor = true;
@@ -41,10 +46,10 @@ Car.prototype.create = function() {
     this.world.b2World.CreateJoint(jointDef);
 
     jointDef.anchorPoint.Set(290, height + 20);
-    jointDef.body2 = _w2
+    jointDef.body2 = wheel2.b2Body;
     this.world.b2World.CreateJoint(jointDef);
 };
 
 Car.prototype.getPosition = function() {
-    return this.body.m_position;
+    return this.body.b2Body.m_position;
 };

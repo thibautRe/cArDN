@@ -7,6 +7,8 @@ var World = function() {
     var gravity = new b2Vec2(0,300);
     this.b2World = new b2World(AABB, gravity, true);
 
+    this.simObjects = [];
+
     // DEFAULT VALUES
     this.groundGenerator = GroundGenerators.random(Math.PI/10);
     this.groundTileSize = 60;
@@ -45,5 +47,6 @@ World.prototype.generateGround = function (stepNumber) {
 };
 
 World.prototype.AddSimObject = function(simObject) {
-    return this.b2World.CreateBody(simObject.b2BodyDef);
+    this.simObjects.push(simObject);
+    simObject.b2Body = this.b2World.CreateBody(simObject.b2BodyDef);
 };
