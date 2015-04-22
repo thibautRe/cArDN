@@ -12,16 +12,17 @@ function step() {
     var iteration = 1;
     world.b2World.Step(timeStep, iteration);
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    var cameraPosition = b2Math.SubtractVV(car.m_position, new b2Vec2(canvasWidth/2, canvasHeight/2));
+    var cameraPosition = b2Math.SubtractVV(car.getPosition(), new b2Vec2(canvasWidth/2, canvasHeight/2));
     drawWorld(world.b2World, ctx, cameraPosition);
     setTimeout(step, 10);
 }
 
 var loadAll = function() {
     world = new World();
-    world.groundGenerator = GroundGenerators.wave(10);
-    world.generateGround(200);
-    car = drawCar(world.b2World);
+    world.generateGround(100);
+
+    car = new Car(world);
+    car.create();
     ctx = $('canvas').getContext('2d');
     var canvasElm = $('canvas');
     canvasWidth = canvasElm.width;

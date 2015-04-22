@@ -8,7 +8,7 @@ var World = function() {
     this.b2World = new b2World(AABB, gravity, true);
 
     // DEFAULT VALUES
-    this.groundGenerator = GroundGenerators.random(Math.PI/4);
+    this.groundGenerator = GroundGenerators.random(Math.PI/10);
     this.groundTileSize = 60;
     this.groundTileHeight = 5;
 };
@@ -21,7 +21,7 @@ World.prototype.generateGround = function (stepNumber) {
     var groundBd = new b2BodyDef();
     groundBd.AddShape(groundSd);
     groundBd.position.Set(0, groundStartHeight);
-    this.b2World.CreateBody(groundBd)
+    this.AddSimObject(new SimObject(groundBd));
 
     var nextJointX = 500, nextJointY = groundStartHeight;
     var currentX, currentY;
@@ -41,7 +41,11 @@ World.prototype.generateGround = function (stepNumber) {
 
         nextJointX += this.groundTileSize*Math.cos(currentRotation);
         nextJointY += this.groundTileSize*Math.sin(currentRotation);
-        this.b2World.CreateBody(groundBd);
+        this.AddSimObject(new SimObject(groundBd));
 
     }
+};
+
+World.prototype.AddSimObject = function(simObject) {
+    return this.b2World.CreateBody(simObject.b2BodyDef);
 };
