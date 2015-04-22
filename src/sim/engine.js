@@ -33,11 +33,15 @@ Engine.prototype.drawWorld = function() {
     }
     for (var i in this.world.simObjects) {
         simO = this.world.simObjects[i];
-        if (simO.b2Body === undefined) continue;
-        for (var j = simO.b2Body.GetShapeList(); j; j=j.m_next) {
-            if (j) {
-                this.drawShape(j);
+        if (simO.imageSrc === undefined) {
+            if (simO.b2Body === undefined) continue;
+            for (var j = simO.b2Body.GetShapeList(); j; j=j.m_next) {
+                if (j) {
+                    this.drawShape(j);
+                }
             }
+        } else {
+            this.drawSimObject(simO);
         }
     }
 }
@@ -125,4 +129,18 @@ Engine.prototype.drawJoint = function(joint) {
         break;
     }
     this.context.stroke();
+};
+
+
+Engine.prototype.drawSimObject = function(simO) {
+    var pos = b2Math.SubtractVV(simO.b2Body.GetCenterPosition(), this.getCameraPosition());
+    var rot = simO.b2Body.GetRotation();
+    if (!simO.image_loaded) return;
+    this.context.save();
+    this.context.translate(pos.x, pos.y);
+    this.context.rotate(rot);
+    this.context.scale(simO.imageSize.width/simO.image.width, simO.imageSize.height/simO.image.height);
+    this.context.translate(-simO.image.width/2, -simO.image.height/2);
+    this.context.drawImage(simO.image, 0, 0);
+    this.context.restore();
 };

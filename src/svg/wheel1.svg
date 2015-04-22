@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="Nouveau document 1">
+   sodipodi:docname="wheel1.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -73,7 +73,10 @@
        sodipodi:rx="112.12693"
        sodipodi:ry="112.12693"
        d="m 384.86811,187.6716 c 0,61.92599 -50.20094,112.12693 -112.12693,112.12693 -61.92599,0 -112.12693,-50.20094 -112.12693,-112.12693 0,-61.92599 50.20094,-112.12693 112.12693,-112.12693 61.92599,0 112.12693,50.20094 112.12693,112.12693 z"
-       transform="matrix(0.16281024,0,0,0.16281024,264.33612,136.11674)" />
+       transform="matrix(0.16281024,0,0,0.16281024,264.33612,136.11674)"
+       inkscape:export-filename="C:\Users\Thibaut\Documents\code\box2d-js_0.1.0\assets\img\wheel1.png"
+       inkscape:export-xdpi="108.4"
+       inkscape:export-ydpi="108.4" />
     <path
        sodipodi:type="star"
        style="fill:#ad9e94;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
@@ -91,6 +94,19 @@
        d="M 33.663995,7.8468298 29.770782,19.327514 37.021174,29.043224 24.899325,28.888286 17.89963,38.786138 14.301128,27.209696 2.7246866,23.611194 12.622539,16.611499 12.4676,4.4896506 22.18331,11.740042 z"
        transform="translate(287.98576,145.91619)"
        inkscape:transform-center-x="0.88248679"
-       inkscape:transform-center-y="0.88248679" />
+       inkscape:transform-center-y="0.88248679"
+       inkscape:export-filename="C:\Users\Thibaut\Documents\code\box2d-js_0.1.0\assets\img\wheel1.png"
+       inkscape:export-xdpi="108.4"
+       inkscape:export-ydpi="108.4" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ad9e94;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path3757"
+       sodipodi:cx="16.695543"
+       sodipodi:cy="12.334407"
+       sodipodi:rx="4.1794572"
+       sodipodi:ry="4.0514188"
+       d="m 20.875,12.334407 a 4.1794572,4.0514188 0 1 1 -8.358914,0 4.1794572,4.0514188 0 1 1 8.358914,0 z"
+       transform="translate(287.98576,145.91619)" />
   </g>
 </svg>
