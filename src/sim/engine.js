@@ -8,6 +8,7 @@ var Engine = function(world) {
     };
 
     this.targetPositionGetter;
+    this.debugLines = true;
 };
 
 Engine.prototype.run = function() {
@@ -33,16 +34,15 @@ Engine.prototype.drawWorld = function() {
     }
     for (var i in this.world.simObjects) {
         simO = this.world.simObjects[i];
-        if (simO.imageSrc === undefined) {
+        if (simO.imageSrc === undefined || this.debugLines) {
             if (simO.b2Body === undefined) continue;
             for (var j = simO.b2Body.GetShapeList(); j; j=j.m_next) {
                 if (j) {
                     this.drawShape(j);
                 }
             }
-        } else {
-            this.drawSimObject(simO);
         }
+        this.drawSimObject(simO);
     }
 }
 
