@@ -6,16 +6,6 @@ var canvasHeight;
 var canvasTop;
 var canvasLeft;
 
-function setupWorld(did) {
-	if (!did) did = 0;
-	world = createWorld();
-	initId += did;
-	initId %= demos.InitWorlds.length;
-	if (initId < 0) initId = demos.InitWorlds.length + initId;
-	demos.InitWorlds[initId](world);
-}
-function setupNextWorld() { setupWorld(1); }
-function setupPrevWorld() { setupWorld(-1); }
 function step(cnt) {
 	var stepping = false;
 	var timeStep = 1.0/60;
@@ -26,7 +16,7 @@ function step(cnt) {
 	setTimeout('step(' + (cnt || 0) + ')', 10);
 }
 Event.observe(window, 'load', function() {
-	setupWorld();
+	drawCar(world)
 	ctx = $('canvas').getContext('2d');
 	var canvasElm = $('canvas');
 	canvasWidth = canvasElm.width;
@@ -35,7 +25,6 @@ Event.observe(window, 'load', function() {
 	canvasLeft = parseInt(canvasElm.style.left);
 	Event.observe('canvas', 'contextmenu', function(e) {
 		if (e.preventDefault) e.preventDefault();
-		setupPrevWorld();
 		return false;
 	});
 	step();

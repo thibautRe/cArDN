@@ -1,5 +1,4 @@
-demos.crank = {};
-demos.crank.initWorld = function(world) {
+crank = function(world) {
 	var ground = world.m_groundBody;
 
 	// Define crank.
@@ -62,8 +61,7 @@ demos.crank.initWorld = function(world) {
 	world.CreateJoint(pjd);
 
 	// Create a payload
-	sd.density = 2.0;
+	//sd.density = 2.0;
 	bd.position.Set(500/2, 10);
 	world.CreateBody(bd);
 }
-demos.InitWorlds.push(demos.crank.initWorld);
