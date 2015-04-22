@@ -1,5 +1,6 @@
-var Car = function(world) {
+var Car = function(world, adn) {
     this.world = world;
+    this.adn = adn;
 };
 
 Car.prototype.create = function() {
@@ -20,18 +21,22 @@ Car.prototype.create = function() {
     
     // Add the wheels
     var ballDef = new b2CircleDef();
-    ballDef.density = 1;
-    ballDef.radius = 20;
+    ballDef.density = 0.4;
     ballDef.restitution = 0.1;
     ballDef.friction = 10;
-    wheel = new b2BodyDef();
-    wheel.AddShape(ballDef);
-    wheel.position.Set(210, height + 20);
-    wheel1 = new SimObject(wheel);
+    wheel1Def = new b2BodyDef();
+    ballDef.radius = this.adn.props["W1R"];
+    wheel1Def.AddShape(ballDef);
+    wheel1Def.position.Set(210, height + 20 + this.adn.props["W1A"]);
+    wheel1 = new SimObject(wheel1Def);
+    wheel1.imageSrc = "wheel1.png";
     this.world.AddSimObject(wheel1);
-    console.log(wheel1.b2Body);
-    wheel.position.Set(290, height + 20);
-    wheel2 = new SimObject(wheel);
+    wheel2Def = new b2BodyDef();
+    ballDef.radius = this.adn.props["W2R"];
+    wheel2Def.AddShape(ballDef);
+    wheel2Def.position.Set(290, height + 20 + this.adn.props["W2A"]);
+    wheel2 = new SimObject(wheel2Def);
+    wheel2.imageSrc = "wheel1.png";
     this.world.AddSimObject(wheel2);
 
     // Add the joints between the body and the wheels
@@ -51,5 +56,6 @@ Car.prototype.create = function() {
 };
 
 Car.prototype.getPosition = function() {
+    if (this.body === undefined) return new b2Vec2(0, 0);
     return this.body.b2Body.m_position;
 };

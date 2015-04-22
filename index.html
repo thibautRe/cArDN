@@ -79,10 +79,12 @@
     <script type="text/javascript" src="src/sim/engine.js"></script>
     <script type="text/javascript" src="src/sim/simobject.js"></script>
     <script type="text/javascript" src="src/sim/car.js"></script>
+    <script type="text/javascript" src="src/sim/adn.js"></script>
     <script type="text/javascript" src="src/sim/groundgenerators/main.js"></script>
     <script type="text/javascript" src="src/sim/groundgenerators/random.js"></script>
     <script type="text/javascript" src="src/sim/groundgenerators/wave.js"></script>
-    <script src='demos/draw_world.js'></script>
+    <script type="text/javascript" src="src/sim/adngenerators/main.js"></script>
+    <script type="text/javascript" src="src/sim/adngenerators/random.js"></script>
     
 
     <style type="text/css">
@@ -105,7 +107,15 @@
         var world = new World();
         world.generateGround(100);
 
+        var adn = ADNGenerators.random();
+        var car = new Car(world);
+        car.adn = adn;
+        car.create();
+
         var engine = new Engine(world);
+        engine.targetPositionGetter = function() {
+            return car.getPosition()
+        };
         engine.run();
     </script>
 </body>
