@@ -76,14 +76,13 @@
         <!-- demos -->
 
     <script type="text/javascript" src="src/sim/world.js"></script>
+    <script type="text/javascript" src="src/sim/engine.js"></script>
     <script type="text/javascript" src="src/sim/simobject.js"></script>
     <script type="text/javascript" src="src/sim/car.js"></script>
     <script type="text/javascript" src="src/sim/groundgenerators/main.js"></script>
     <script type="text/javascript" src="src/sim/groundgenerators/random.js"></script>
     <script type="text/javascript" src="src/sim/groundgenerators/wave.js"></script>
     <script src='demos/draw_world.js'></script>
-    <script src='demos/demos.js'></script>
-    <script src="demos/car.js"></script>
     
 
     <style type="text/css">
@@ -103,7 +102,11 @@
     <canvas id="canvas" width="800" height="500"></canvas>
 
     <script type="text/javascript">
-        loadAll();
+        var world = new World();
+        world.generateGround(100);
+
+        var engine = new Engine(world);
+        engine.run();
     </script>
 </body>
 </html>
