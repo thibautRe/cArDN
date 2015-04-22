@@ -1,5 +1,5 @@
 var initId = 0;
-var world = createWorld();
+var world;
 var ctx;
 var canvasWidth;
 var canvasHeight;
@@ -10,14 +10,17 @@ var car;
 function step() {
     var timeStep = 1.0/60;
     var iteration = 1;
-    world.Step(timeStep, iteration);
+    world.b2World.Step(timeStep, iteration);
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     var cameraPosition = b2Math.SubtractVV(car.m_position, new b2Vec2(canvasWidth/2, canvasHeight/2));
-    drawWorld(world, ctx, cameraPosition);
+    drawWorld(world.b2World, ctx, cameraPosition);
     setTimeout(step, 10);
 }
-Event.observe(window, 'load', function() {
-    car = drawCar(world);
+
+var loadAll = function() {
+    world = new World();
+    world.generateGround(20);
+    car = drawCar(world.b2World);
     ctx = $('canvas').getContext('2d');
     var canvasElm = $('canvas');
     canvasWidth = canvasElm.width;
@@ -29,4 +32,5 @@ Event.observe(window, 'load', function() {
         return false;
     });
     step();
-});
+    
+};
