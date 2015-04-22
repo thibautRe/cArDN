@@ -12,7 +12,7 @@ function drawCar(world) {
     jointDef.body1 = car_body
     jointDef.body2 = createBall(world, 210, height + 20 + alea[0])
     jointDef.motorSpeed = 20
-    jointDef.motorTorque = 10000000
+    jointDef.motorTorque = 50000000
     jointDef.enableMotor = true
 
     world.CreateJoint(jointDef);
