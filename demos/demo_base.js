@@ -1,16 +1,16 @@
 function createWorld() {
     var worldAABB = new b2AABB();
-    worldAABB.minVertex.Set(-1000, -1000);
-    worldAABB.maxVertex.Set(1000, 1000);
-    var gravity = new b2Vec2(0,200);
+    worldAABB.minVertex.Set(0, -10000);
+    worldAABB.maxVertex.Set(10000, 10000);
+    var gravity = new b2Vec2(0,300);
     var doSleep = true;
     var world = new b2World(worldAABB, gravity, doSleep);
-    createRandomGround(world, 20);
+    createRandomGround(world, 200);
     return world;
 }
 
 function createRandomGround(world, size) {
-    var groundHeight = 5, groundWidth = 30;
+    var groundHeight = 5, groundWidth = 50;
     var groundStartHeight = 500;
     var rotationAmplitude = Math.PI/10;
     var groundSd = new b2BoxDef();
@@ -30,6 +30,8 @@ function createRandomGround(world, size) {
         groundBd = new b2BodyDef();
         groundBd.AddShape(groundSd);
         currentRotation += (2*Math.random() - 1)*rotationAmplitude;
+
+        currentRotation = Math.min(Math.max(currentRotation, -Math.PI/2), Math.PI/2)
         currentX = nextJointX + groundWidth/2*Math.cos(currentRotation);
         currentY = nextJointY + groundWidth/2*Math.sin(currentRotation);
         groundBd.position.Set(currentX, currentY);

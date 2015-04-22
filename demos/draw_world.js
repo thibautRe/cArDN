@@ -1,20 +1,20 @@
-function drawWorld(world, context) {
+function drawWorld(world, context, cameraPosition) {
 	for (var j = world.m_jointList; j; j = j.m_next) {
-		drawJoint(j, context);
+		drawJoint(j, context, cameraPosition);
 	}
 	for (var b = world.m_bodyList; b; b = b.m_next) {
 		for (var s = b.GetShapeList(); s != null; s = s.GetNext()) {
-			drawShape(s, context);
+			drawShape(s, context, cameraPosition);
 		}
 	}
 }
-function drawJoint(joint, context) {
+function drawJoint(joint, context, cameraPosition) {
 	var b1 = joint.m_body1;
 	var b2 = joint.m_body2;
-	var x1 = b1.m_position;
-	var x2 = b2.m_position;
-	var p1 = joint.GetAnchor1();
-	var p2 = joint.GetAnchor2();
+	var x1 = b2Math.SubtractVV(b1.m_position, cameraPosition);
+	var x2 = b2Math.SubtractVV(b2.m_position, cameraPosition);
+	var p1 = b2Math.SubtractVV(joint.GetAnchor1(), cameraPosition);
+	var p2 = b2Math.SubtractVV(joint.GetAnchor2(), cameraPosition);
 	context.strokeStyle = '#00eeee';
 	context.beginPath();
 	switch (joint.m_type) {
@@ -46,14 +46,14 @@ function drawJoint(joint, context) {
 	}
 	context.stroke();
 }
-function drawShape(shape, context) {
+function drawShape(shape, context, cameraPosition) {
 	context.strokeStyle = '#ffffff';
 	context.beginPath();
 	switch (shape.m_type) {
 	case b2Shape.e_circleShape:
 		{
 			var circle = shape;
-			var pos = circle.m_position;
+			var pos = b2Math.SubtractVV(circle.m_position, cameraPosition);
 			var r = circle.m_radius;
 			var segments = 16.0;
 			var theta = 0.0;
@@ -78,10 +78,11 @@ function drawShape(shape, context) {
 	case b2Shape.e_polyShape:
 		{
 			var poly = shape;
-			var tV = b2Math.AddVV(poly.m_position, b2Math.b2MulMV(poly.m_R, poly.m_vertices[0]));
+			var pos = b2Math.SubtractVV(poly.m_position, cameraPosition);
+			var tV = b2Math.AddVV(pos, b2Math.b2MulMV(poly.m_R, poly.m_vertices[0]));
 			context.moveTo(tV.x, tV.y);
 			for (var i = 0; i < poly.m_vertexCount; i++) {
-				var v = b2Math.AddVV(poly.m_position, b2Math.b2MulMV(poly.m_R, poly.m_vertices[i]));
+				var v = b2Math.AddVV(pos, b2Math.b2MulMV(poly.m_R, poly.m_vertices[i]));
 				context.lineTo(v.x, v.y);
 			}
 			context.lineTo(tV.x, tV.y);

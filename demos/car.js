@@ -7,11 +7,11 @@ function drawCar(world) {
     
     var jointDef = new b2RevoluteJointDef();
 
-    var alea = [1.4, 2]
+    var alea = [0, 0]
     jointDef.anchorPoint.Set(210, height + 20)
     jointDef.body1 = car_body
     jointDef.body2 = createBall(world, 210, height + 20 + alea[0])
-    jointDef.motorSpeed = 200
+    jointDef.motorSpeed = 20
     jointDef.motorTorque = 10000000
     jointDef.enableMotor = true
 
@@ -21,4 +21,5 @@ function drawCar(world) {
     jointDef.body2 = createBall(world, 290, height + 20 + alea[1])
     world.CreateJoint(jointDef)
 
+    return car_body
 }

@@ -5,18 +5,19 @@ var canvasWidth;
 var canvasHeight;
 var canvasTop;
 var canvasLeft;
+var car;
 
-function step(cnt) {
-    var stepping = false;
+function step() {
     var timeStep = 1.0/60;
     var iteration = 1;
     world.Step(timeStep, iteration);
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    drawWorld(world, ctx);
-    setTimeout('step(' + (cnt || 0) + ')', 10);
+    var cameraPosition = b2Math.SubtractVV(car.m_position, new b2Vec2(canvasWidth/2, canvasHeight/2));
+    drawWorld(world, ctx, cameraPosition);
+    setTimeout(step, 10);
 }
 Event.observe(window, 'load', function() {
-    drawCar(world)
+    car = drawCar(world);
     ctx = $('canvas').getContext('2d');
     var canvasElm = $('canvas');
     canvasWidth = canvasElm.width;
