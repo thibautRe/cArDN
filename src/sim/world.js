@@ -31,7 +31,7 @@ World.prototype.generateGround = function (stepNumber) {
     for (var i = 0; i < stepNumber; i++) {
         groundBd = new b2BodyDef();
         groundBd.AddShape(groundSd);
-        currentRotation = this.groundGenerator(currentRotation, i);
+        currentRotation = this.groundGenerator(currentRotation, i, nextJointX, nextJointY);
 
         currentRotation = Math.min(Math.max(currentRotation, -Math.PI/2), Math.PI/2)
         currentX = nextJointX + this.groundTileSize/2*Math.cos(currentRotation);

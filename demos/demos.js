@@ -19,7 +19,8 @@ function step() {
 
 var loadAll = function() {
     world = new World();
-    world.generateGround(20);
+    world.groundGenerator = GroundGenerators.wave(10);
+    world.generateGround(200);
     car = drawCar(world.b2World);
     ctx = $('canvas').getContext('2d');
     var canvasElm = $('canvas');
