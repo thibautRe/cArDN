@@ -99,19 +99,17 @@
             margin: auto;
         }
     </style>
-
 </head>
 <body>
     <canvas id="canvas" width="800" height="500"></canvas>
 
     <script type="text/javascript">
         var world = new World();
-        world.groundGenerator = GroundGenerators.upupup();
+        //world.groundGenerator = GroundGenerators.upupup();
         world.generateGround(200);
         var engine = new Engine(world);
 
         var statsLoop = function() {
-            console.log("NEW CAR");
             var adn = ADNGenerators.random();
             var car = new Car(world);
             car.adn = adn;
@@ -126,8 +124,9 @@
             };
             engine.mainLoop = function() {
                 car.updateScore();
+                car.checkForces();
             };
-        }
+        };
 
         statsLoop();
         engine.run();
