@@ -30,7 +30,7 @@ Car.prototype.create = function() {
     var ballDef = new b2CircleDef();
     ballDef.density = 1;
     ballDef.restitution = 0;
-    ballDef.friction = 1;
+    ballDef.friction = 10;
     var wheel1Def = new b2BodyDef();
     var r1 = this.adn.props["W1R"];
     ballDef.radius = r1;
@@ -60,8 +60,8 @@ Car.prototype.create = function() {
     jointDef.anchorPoint.Set(-40, height + 35);
     jointDef.body1 = this.body.b2Body;
     jointDef.body2 = this.wheel1.b2Body;
-    jointDef.motorSpeed = 10;
-    jointDef.motorTorque = 50000000;
+    jointDef.motorSpeed = this.adn.props["W1S"];
+    jointDef.motorTorque = this.adn.props["W1T"];;
     jointDef.enableMotor = true;
     this.wheel1Joint = this.world.b2World.CreateJoint(jointDef);
     this.joints.push(this.wheel1Joint);
@@ -70,8 +70,8 @@ Car.prototype.create = function() {
     jointDef.anchorPoint.Set(40, height + 35);
     jointDef.body1 = this.body.b2Body;
     jointDef.body2 = this.wheel2.b2Body;
-    jointDef.motorSpeed = 10;
-    jointDef.motorTorque = 50000000;
+    jointDef.motorSpeed = this.adn.props["W2S"];;
+    jointDef.motorTorque = this.adn.props["W2T"];;
     jointDef.enableMotor = true;
     this.wheel2Joint = this.world.b2World.CreateJoint(jointDef);
     this.joints.push(this.wheel2Joint);
