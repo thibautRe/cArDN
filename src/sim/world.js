@@ -29,32 +29,39 @@ World.prototype.generateGround = function (stepNumber) {
     var nextX = groundStartSize, nextY = groundStartHeight - this.groundTileHeight/2;
     var currentX, currentY, oldX, oldY;
     var currentRotation = 0;
+    var step = 0;
     groundSd.extents.Set(this.groundTileSize/2, this.groundTileHeight/2);
 
-    var ground = new b2BodyDef();
+    for (var i64 = 0; i64 < parseInt(stepNumber/64); i64++) {
 
-    for (var i = 0; i < stepNumber; i++) {
-        oldX = nextX;
-        oldY = nextY;
-        currentRotation = this.groundGenerator(currentRotation, i, oldX, oldY);
-        currentX = oldX + this.groundTileSize/2*Math.cos(currentRotation);
-        currentY = oldY + this.groundTileSize/2*Math.sin(currentRotation);
-        nextX += this.groundTileSize*Math.cos(currentRotation);
-        nextY += this.groundTileSize*Math.sin(currentRotation);
+        var ground = new b2BodyDef();
 
-        var tile = new b2PolyDef();
-        tile.restitution = 0;
-        tile.friction = 1;
-        tile.vertexCount = 4;
-        tile.vertices[0].Set(oldX, oldY);
-        tile.vertices[1].Set(nextX, nextY);
-        tile.vertices[2].Set(nextX - Math.sin(currentRotation)*this.groundTileHeight, nextY + Math.cos(currentRotation)*this.groundTileHeight);
-        tile.vertices[3].Set(oldX - Math.sin(currentRotation)*this.groundTileHeight, oldY + Math.cos(currentRotation)*this.groundTileHeight);
-        ground.AddShape(tile);
+        for (var i = 0; i < 64 && step < stepNumber ; i++) {
+
+            oldX = nextX;
+            oldY = nextY;
+            currentRotation = this.groundGenerator(currentRotation, step, oldX, oldY);
+            currentX = oldX + this.groundTileSize/2*Math.cos(currentRotation);
+            currentY = oldY + this.groundTileSize/2*Math.sin(currentRotation);
+            nextX += this.groundTileSize*Math.cos(currentRotation);
+            nextY += this.groundTileSize*Math.sin(currentRotation);
+
+            var tile = new b2PolyDef();
+            tile.restitution = 0;
+            tile.friction = 1;
+            tile.vertexCount = 4;
+            tile.vertices[0].Set(oldX, oldY);
+            tile.vertices[1].Set(nextX, nextY);
+            tile.vertices[2].Set(nextX - Math.sin(currentRotation)*this.groundTileHeight, nextY + Math.cos(currentRotation)*this.groundTileHeight);
+            tile.vertices[3].Set(oldX - Math.sin(currentRotation)*this.groundTileHeight, oldY + Math.cos(currentRotation)*this.groundTileHeight);
+            ground.AddShape(tile);
+            step++;
+        }
+        ground.position.Set(0,0);
+
+        this.AddSimObject(new SimObject(ground));
     }
-    ground.position.Set(0,0);
 
-    this.AddSimObject(new SimObject(ground));
 };
 
 World.prototype.AddSimObject = function(simObject) {
@@ -63,7 +70,6 @@ World.prototype.AddSimObject = function(simObject) {
 };
 
 World.prototype.DestroySimObject = function(simObject) {
-    console.log(simObject.b2Body);
     this.b2World.DestroyBody(simObject.b2Body);
     for (var i = 0; i < this.simObjects.length; i++) {
         if (this.simObjects[i] == simObject) {

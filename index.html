@@ -83,6 +83,7 @@
     <script type="text/javascript" src="src/sim/groundgenerators/main.js"></script>
     <script type="text/javascript" src="src/sim/groundgenerators/random.js"></script>
     <script type="text/javascript" src="src/sim/groundgenerators/wave.js"></script>
+    <script type="text/javascript" src="src/sim/groundgenerators/upupup.js"></script>
     <script type="text/javascript" src="src/sim/adngenerators/main.js"></script>
     <script type="text/javascript" src="src/sim/adngenerators/random.js"></script>
     
@@ -105,7 +106,8 @@
 
     <script type="text/javascript">
         var world = new World();
-        world.generateGround(64);
+        world.groundGenerator = GroundGenerators.upupup();
+        world.generateGround(200);
         var engine = new Engine(world);
 
         var statsLoop = function() {

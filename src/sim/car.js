@@ -15,7 +15,7 @@ Car.prototype.create = function() {
 
     // Create the body
     var boxDef = new b2BoxDef();
-    boxDef.density = 3;
+    boxDef.density = 6;
     boxDef.extents.Set(50, 20);
     boxDef.friction = 2;
     boxDef.restitution = 0;
@@ -29,12 +29,12 @@ Car.prototype.create = function() {
     // Add the wheels
     var ballDef = new b2CircleDef();
     ballDef.density = 1;
-    ballDef.friction = 10;
+    ballDef.friction = 100;
     var wheel1Def = new b2BodyDef();
     var r1 = this.adn.props["W1R"];
     ballDef.radius = r1;
     wheel1Def.AddShape(ballDef);
-    wheel1Def.position.Set(-40, height + 35 + this.adn.props["W1A"]);
+    wheel1Def.position.Set(-40, height + 20 + this.adn.props["W1A"]);
     this.wheel1 = new SimObject(wheel1Def);
     this.wheel1.setImage("wheel1.png", {width: 2*r1, height: 2*r1});
     this.world.AddSimObject(this.wheel1);
@@ -42,12 +42,12 @@ Car.prototype.create = function() {
 
     var ballDef = new b2CircleDef();
     ballDef.density = 1;
-    ballDef.friction = 10;
+    ballDef.friction = 100;
     var wheel2Def = new b2BodyDef();
     var r2 = this.adn.props["W2R"];
     ballDef.radius = r2;
     wheel2Def.AddShape(ballDef);
-    wheel2Def.position.Set(40, height + 35 + this.adn.props["W1A"]);
+    wheel2Def.position.Set(40, height + 20 + this.adn.props["W1A"]);
     this.wheel2 = new SimObject(wheel2Def);
     this.wheel2.setImage("wheel1.png", {width: 2*r2, height: 2*r2});
     this.world.AddSimObject(this.wheel2);
@@ -55,7 +55,7 @@ Car.prototype.create = function() {
 
     // Add the joints between the body and the wheels
     var jointDef = new b2RevoluteJointDef();
-    jointDef.anchorPoint.Set(-40, height + 35);
+    jointDef.anchorPoint.Set(-40, height + 20);
     jointDef.body1 = this.body.b2Body;
     jointDef.body2 = this.wheel1.b2Body;
     jointDef.motorSpeed = this.adn.props["W1S"];
@@ -65,7 +65,7 @@ Car.prototype.create = function() {
     this.joints.push(this.wheel1Joint);
 
     jointDef = new b2RevoluteJointDef();
-    jointDef.anchorPoint.Set(40, height + 35);
+    jointDef.anchorPoint.Set(40, height + 20);
     jointDef.body1 = this.body.b2Body;
     jointDef.body2 = this.wheel2.b2Body;
     jointDef.motorSpeed = this.adn.props["W2S"];;
@@ -100,8 +100,6 @@ Car.prototype.updateScore = function() {
 };
 
 Car.prototype.destroy = function() {
-    console.log("DESTROY");
-    console.log(this.simObjects);
     for (var i = 0; i < this.simObjects.length; i++) {
         this.world.DestroySimObject(this.simObjects[i]);
     }
