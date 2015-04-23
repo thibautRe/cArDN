@@ -106,19 +106,28 @@
     <script type="text/javascript">
         var world = new World();
         world.generateGround(64);
-
-        var adn = ADNGenerators.random();
-        var car = new Car(world);
-        car.adn = adn;
-        car.create();
-
         var engine = new Engine(world);
-        engine.targetPositionGetter = function() {
-            return car.getPosition();
-        };
-        engine.mainLoop = function() {
-            car.updateScore();
-        };
+
+        var statsLoop = function() {
+            console.log("NEW CAR");
+            var adn = ADNGenerators.random();
+            var car = new Car(world);
+            car.adn = adn;
+            car.create();
+
+            car.onend = function() {
+                statsLoop();
+            };
+
+            engine.targetPositionGetter = function() {
+                return car.getPosition();
+            };
+            engine.mainLoop = function() {
+                car.updateScore();
+            };
+        }
+
+        statsLoop();
         engine.run();
     </script>
 </body>

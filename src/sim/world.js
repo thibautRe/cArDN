@@ -50,7 +50,6 @@ World.prototype.generateGround = function (stepNumber) {
         tile.vertices[1].Set(nextX, nextY);
         tile.vertices[2].Set(nextX - Math.sin(currentRotation)*this.groundTileHeight, nextY + Math.cos(currentRotation)*this.groundTileHeight);
         tile.vertices[3].Set(oldX - Math.sin(currentRotation)*this.groundTileHeight, oldY + Math.cos(currentRotation)*this.groundTileHeight);
-        console.log(tile.vertices);
         ground.AddShape(tile);
     }
     ground.position.Set(0,0);
@@ -61,4 +60,14 @@ World.prototype.generateGround = function (stepNumber) {
 World.prototype.AddSimObject = function(simObject) {
     this.simObjects.push(simObject);
     simObject.b2Body = this.b2World.CreateBody(simObject.b2BodyDef);
+};
+
+World.prototype.DestroySimObject = function(simObject) {
+    console.log(simObject.b2Body);
+    this.b2World.DestroyBody(simObject.b2Body);
+    for (var i = 0; i < this.simObjects.length; i++) {
+        if (this.simObjects[i] == simObject) {
+            this.simObjects.splice(i, 1);
+        }
+    }
 };
