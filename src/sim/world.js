@@ -44,6 +44,7 @@ World.prototype.generateGround = function (stepNumber) {
 
         var tile = new b2PolyDef();
         tile.restitution = 0;
+        tile.friction = 1;
         tile.vertexCount = 4;
         tile.vertices[0].Set(oldX, oldY);
         tile.vertices[1].Set(nextX, nextY);
