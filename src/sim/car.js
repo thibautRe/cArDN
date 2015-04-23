@@ -5,10 +5,8 @@ var Car = function(world, adn) {
     this.scoreTimeout;
 
     this.simObjects = {};
-    this.joints = {};
 
     this.maxReactionForce = 0;
-    this.testTimeout;
 };
 
 Car.prototype.onend = function() {};
@@ -37,7 +35,7 @@ Car.prototype.create = function() {
     ballDef.radius = r1;
     wheel1Def.AddShape(ballDef);
     wheel1Def.position.Set(-40, height + 20 + this.adn.props["W1A"]);
-    this.simObjects.wheel1 = new SimObject(wheel1Def);
+    this.simObjects.wheel1 = new Wheel(wheel1Def);
     this.simObjects.wheel1.setImage("wheel1.png", {width: 2*r1, height: 2*r1});
     this.world.AddSimObject(this.simObjects.wheel1);
 
@@ -49,7 +47,7 @@ Car.prototype.create = function() {
     ballDef.radius = r2;
     wheel2Def.AddShape(ballDef);
     wheel2Def.position.Set(40, height + 20 + this.adn.props["W1A"]);
-    this.simObjects.wheel2 = new SimObject(wheel2Def);
+    this.simObjects.wheel2 = new Wheel(wheel2Def);
     this.simObjects.wheel2.setImage("wheel1.png", {width: 2*r2, height: 2*r2});
     this.world.AddSimObject(this.simObjects.wheel2);
 
@@ -61,7 +59,7 @@ Car.prototype.create = function() {
     jointDef.motorSpeed = this.adn.props["W1S"];
     jointDef.motorTorque = this.adn.props["W1T"];;
     jointDef.enableMotor = true;
-    this.joints.wheel1 = this.world.b2World.CreateJoint(jointDef);
+    this.simObjects.wheel1.addJoint(this.world.b2World.CreateJoint(jointDef));
 
     jointDef = new b2RevoluteJointDef();
     jointDef.anchorPoint.Set(40, height + 20);
@@ -70,7 +68,7 @@ Car.prototype.create = function() {
     jointDef.motorSpeed = this.adn.props["W2S"];;
     jointDef.motorTorque = this.adn.props["W2T"];;
     jointDef.enableMotor = true;
-    this.joints.wheel2 = this.world.b2World.CreateJoint(jointDef);
+    this.simObjects.wheel2.addJoint(this.world.b2World.CreateJoint(jointDef));
 
     var car = this;
     
@@ -84,7 +82,7 @@ Car.prototype.getPosition = function() {
 Car.prototype.updateScore = function() {
     var tempScore = this.getPosition().Length();
 
-    if (tempScore > this.score + 20) {
+    if (tempScore > this.score + 50) {
         this.score = tempScore;
         clearTimeout(this.scoreTimeout);
         this.scoreTimeout = undefined;
@@ -100,29 +98,16 @@ Car.prototype.updateScore = function() {
 };
 
 Car.prototype.checkForces = function() {
-    if (this.joints.wheel2) {
-        var tempF = this.joints.wheel2.GetReactionForce(1).y;
-        if (Math.abs(tempF) > 500000) {
-            console.log(this.joints.wheel2.m_body2);
-            this.world.b2World.DestroyJoint(this.joints.wheel2);
-            delete this.joints.wheel2;
-        }
+    for (var i in this.simObjects) {
+        this.simObjects[i].checkForces(this.world);
     }
 };
 
 Car.prototype.destroy = function() {
-
-    // @DEBUG
-    clearTimeout(this.testTimeout);
-
     // Remove objects
     for (var i in this.simObjects) {
-        this.world.DestroySimObject(this.simObjects[i]);
+        this.simObjects[i].destroy(this.world);
     }
 
-    // Remove joints
-    for (var i in this.joints) {
-        this.world.b2World.DestroyJoint(this.joints[i]);
-    }
     delete this.simObjects;
 };
