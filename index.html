@@ -105,7 +105,7 @@
 
     <script type="text/javascript">
         var world = new World();
-        world.generateGround(100);
+        world.generateGround(64);
 
         var adn = ADNGenerators.random();
         var car = new Car(world);
@@ -114,7 +114,10 @@
 
         var engine = new Engine(world);
         engine.targetPositionGetter = function() {
-            return car.getPosition()
+            return car.getPosition();
+        };
+        engine.mainLoop = function() {
+            car.updateScore();
         };
         engine.run();
     </script>

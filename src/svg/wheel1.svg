@@ -14,7 +14,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="wheel1.svg">
+   sodipodi:docname="wheel1.svg"
+   inkscape:export-filename="C:\Users\Thibaut\Documents\code\box2d-js_0.1.0\src\svg\wheel1.png"
+   inkscape:export-xdpi="108.4"
+   inkscape:export-ydpi="108.4">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="8"
-     inkscape:cx="17.962918"
-     inkscape:cy="20.86027"
+     inkscape:zoom="7.3417721"
+     inkscape:cx="1.0582321"
+     inkscape:cy="10.729921"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -107,6 +110,9 @@
        sodipodi:rx="4.1794572"
        sodipodi:ry="4.0514188"
        d="m 20.875,12.334407 a 4.1794572,4.0514188 0 1 1 -8.358914,0 4.1794572,4.0514188 0 1 1 8.358914,0 z"
-       transform="translate(287.98576,145.91619)" />
+       transform="translate(287.98576,145.91619)"
+       inkscape:export-filename="C:\Users\Thibaut\Documents\code\box2d-js_0.1.0\assets\img\wheel1.png"
+       inkscape:export-xdpi="108"
+       inkscape:export-ydpi="108" />
   </g>
 </svg>

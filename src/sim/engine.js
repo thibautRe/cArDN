@@ -8,27 +8,34 @@ var Engine = function(world) {
     };
 
     this.targetPositionGetter;
-    this.debugLines = true;
+    this.debugLines = false;
 };
 
+// MUST BE OVERLOADED
+Engine.prototype.mainLoop = function() {};
+
+// MAIN LOOP
 Engine.prototype.run = function() {
-    var engine = this;
-    var timeStep = 1.0/60;
-    var iteration = 1;
-    this.world.b2World.Step(timeStep, iteration);
-    this.context.clearRect(0, 0, this.canvasInfos.width, this.canvasInfos.height);
+    // Physics step
+    this.world.b2World.Step(1/60, 1);
+    // Main loop
+    this.mainLoop();
+    // Draw
     this.drawWorld();
+
+    var engine = this;
     setTimeout(function() {
         engine.run();
     }, 10);
 };
 
 Engine.prototype.getCameraPosition = function() {
-    //console.log(this.targetPositionGetter());
     return b2Math.SubtractVV(this.targetPositionGetter(), new b2Vec2(this.canvasInfos.width/2, this.canvasInfos.height/2));
 };
 
+// Draws the world
 Engine.prototype.drawWorld = function() {
+    this.context.clearRect(0, 0, this.canvasInfos.width, this.canvasInfos.height);
     for (var j = this.world.b2World.m_jointList; j; j = j.m_next) {
         this.drawJoint(j);
     }

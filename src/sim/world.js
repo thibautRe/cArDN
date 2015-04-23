@@ -1,7 +1,7 @@
 var World = function() {
     // Set physics bounding box
     var AABB = new b2AABB();
-    AABB.minVertex.Set(0, -10000);
+    AABB.minVertex.Set(-100, -10000);
     AABB.maxVertex.Set(10000, 10000);
 
     var gravity = new b2Vec2(0,300);
@@ -11,39 +11,50 @@ var World = function() {
 
     // DEFAULT VALUES
     this.groundGenerator = GroundGenerators.random(Math.PI/10);
-    this.groundTileSize = 60;
-    this.groundTileHeight = 5;
+    this.groundTileSize = 15;
+    this.groundTileHeight = 10;
 };
 
 World.prototype.generateGround = function (stepNumber) {
-    var groundStartHeight = 500;
+    var groundStartHeight = 0;
+    var groundStartSize = 300;
     var groundSd = new b2BoxDef();
-    groundSd.extents.Set(500, this.groundTileHeight/2);
-    groundSd.restitution = 0.1;
-    var groundBd = new b2BodyDef();
-    groundBd.AddShape(groundSd);
-    groundBd.position.Set(0, groundStartHeight);
-    this.AddSimObject(new SimObject(groundBd));
+    groundSd.extents.Set(groundStartSize, this.groundTileHeight/2);
+    groundSd.restitution = 0;
+    var groundBase = new b2BodyDef();
+    groundBase.AddShape(groundSd);
+    groundBase.position.Set(0, groundStartHeight);
+    this.AddSimObject(new SimObject(groundBase));
 
-    var nextJointX = 500, nextJointY = groundStartHeight;
-    var currentX, currentY;
+    var nextX = groundStartSize, nextY = groundStartHeight - this.groundTileHeight/2;
+    var currentX, currentY, oldX, oldY;
     var currentRotation = 0;
     groundSd.extents.Set(this.groundTileSize/2, this.groundTileHeight/2);
 
+    var ground = new b2BodyDef();
+
     for (var i = 0; i < stepNumber; i++) {
-        groundBd = new b2BodyDef();
-        groundBd.AddShape(groundSd);
-        currentRotation = this.groundGenerator(currentRotation, i, nextJointX, nextJointY);
-        currentX = nextJointX + this.groundTileSize/2*Math.cos(currentRotation);
-        currentY = nextJointY + this.groundTileSize/2*Math.sin(currentRotation);
-        groundBd.position.Set(currentX, currentY);
-        groundBd.rotation = currentRotation;
+        oldX = nextX;
+        oldY = nextY;
+        currentRotation = this.groundGenerator(currentRotation, i, oldX, oldY);
+        currentX = oldX + this.groundTileSize/2*Math.cos(currentRotation);
+        currentY = oldY + this.groundTileSize/2*Math.sin(currentRotation);
+        nextX += this.groundTileSize*Math.cos(currentRotation);
+        nextY += this.groundTileSize*Math.sin(currentRotation);
 
-        nextJointX += this.groundTileSize*Math.cos(currentRotation);
-        nextJointY += this.groundTileSize*Math.sin(currentRotation);
-        this.AddSimObject(new SimObject(groundBd));
-
+        var tile = new b2PolyDef();
+        tile.restitution = 0;
+        tile.vertexCount = 4;
+        tile.vertices[0].Set(oldX, oldY);
+        tile.vertices[1].Set(nextX, nextY);
+        tile.vertices[2].Set(nextX - Math.sin(currentRotation)*this.groundTileHeight, nextY + Math.cos(currentRotation)*this.groundTileHeight);
+        tile.vertices[3].Set(oldX - Math.sin(currentRotation)*this.groundTileHeight, oldY + Math.cos(currentRotation)*this.groundTileHeight);
+        console.log(tile.vertices);
+        ground.AddShape(tile);
     }
+    ground.position.Set(0,0);
+
+    this.AddSimObject(new SimObject(ground));
 };
 
 World.prototype.AddSimObject = function(simObject) {
