@@ -9,8 +9,8 @@ ADNGenerators.random = function () {
     adn.props["W2A"] = Math.random();
     adn.props["W1S"] = Math.random()*10 + 5;
     adn.props["W2S"] = Math.random()*10 + 5;
-    adn.props["W1T"] = Math.random()*50000000 + 25000000;
-    adn.props["W2T"] = Math.random()*50000000 + 25000000;
+    adn.props["W1T"] = Math.random()*100000000 + 50000000;
+    adn.props["W2T"] = Math.random()*100000000 + 50000000;
 
     return adn;
 };

@@ -15,10 +15,10 @@ Car.prototype.create = function() {
 
     // Create the body
     var boxDef = new b2BoxDef();
-    boxDef.density = 2;
+    boxDef.density = 3;
     boxDef.extents.Set(50, 20);
     boxDef.friction = 2;
-    boxDef.restitution = 0.1;
+    boxDef.restitution = 0;
     var boxBd = new b2BodyDef();
     boxBd.AddShape(boxDef);
     boxBd.position.Set(0,height);
@@ -29,7 +29,6 @@ Car.prototype.create = function() {
     // Add the wheels
     var ballDef = new b2CircleDef();
     ballDef.density = 1;
-    ballDef.restitution = 0;
     ballDef.friction = 10;
     var wheel1Def = new b2BodyDef();
     var r1 = this.adn.props["W1R"];
@@ -43,7 +42,6 @@ Car.prototype.create = function() {
 
     var ballDef = new b2CircleDef();
     ballDef.density = 1;
-    ballDef.restitution = 0;
     ballDef.friction = 10;
     var wheel2Def = new b2BodyDef();
     var r2 = this.adn.props["W2R"];

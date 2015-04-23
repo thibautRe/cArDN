@@ -11,7 +11,7 @@ var World = function() {
 
     // DEFAULT VALUES
     this.groundGenerator = GroundGenerators.random(Math.PI/10);
-    this.groundTileSize = 15;
+    this.groundTileSize = 35;
     this.groundTileHeight = 20;
 };
 
