@@ -12,7 +12,7 @@ var World = function() {
     // DEFAULT VALUES
     this.groundGenerator = GroundGenerators.random(Math.PI/10);
     this.groundTileSize = 15;
-    this.groundTileHeight = 10;
+    this.groundTileHeight = 20;
 };
 
 World.prototype.generateGround = function (stepNumber) {
