@@ -5,8 +5,6 @@ var Car = function(world, adn) {
     this.scoreTimeout;
 
     this.simObjects = {};
-
-    this.maxReactionForce = 0;
 };
 
 Car.prototype.onend = function() {};
@@ -69,9 +67,6 @@ Car.prototype.create = function() {
     jointDef.motorTorque = this.adn.props["W2T"];;
     jointDef.enableMotor = true;
     this.simObjects.wheel2.addJoint(this.world.b2World.CreateJoint(jointDef));
-
-    var car = this;
-    
 };
 
 Car.prototype.getPosition = function() {
@@ -90,9 +85,8 @@ Car.prototype.updateScore = function() {
     else if (this.scoreTimeout === undefined) {
         var car = this;
         this.scoreTimeout = setTimeout(function() {
-            this.scoreTimeout = null;
+            car.scoreTimeout = null;
             car.destroy();
-            car.onend();
         }, 2500);
     }
 };
@@ -109,5 +103,6 @@ Car.prototype.destroy = function() {
         this.simObjects[i].destroy(this.world);
     }
 
-    delete this.simObjects;
+    this.simObjects = {};
+    if (typeof this.onend == "function") this.onend();
 };

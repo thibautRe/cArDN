@@ -1,8 +1,8 @@
 var World = function() {
     // Set physics bounding box
     var AABB = new b2AABB();
-    AABB.minVertex.Set(-100, -10000);
-    AABB.maxVertex.Set(10000, 10000);
+    AABB.minVertex.Set(-100, -100000);
+    AABB.maxVertex.Set(100000, 100000);
 
     var gravity = new b2Vec2(0,300);
     this.b2World = new b2World(AABB, gravity, true);

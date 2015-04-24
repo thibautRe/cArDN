@@ -111,33 +111,13 @@
         //world.groundGenerator = GroundGenerators.upupup();
         world.generateGround(200);
         var engine = new Engine(world);
-        var referee = new Referee(world);
+        var referee = new Referee(world, engine);
 
         document.getElementById('replay').onclick = function() {
             console.log(referee.getBestCar());
         };
 
-        var statsLoop = function() {
-            var adn = ADNGenerators.random();
-            var car = new Car(world);
-            car.adn = adn;
-            car.create();
-
-            car.onend = function() {
-                referee.addCarToStats(car);
-                statsLoop();
-            };
-
-            engine.targetPositionGetter = function() {
-                return car.getPosition();
-            };
-            engine.mainLoop = function() {
-                car.updateScore();
-                car.checkForces();
-            };
-        };
-
-        statsLoop();
+        referee.tournament();
         engine.run();
     </script>
 </body>
