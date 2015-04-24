@@ -13,6 +13,7 @@ Referee.prototype.getBestCar = function() {
     for (var i = 0; i < this.stats.length; i++) {
         if (this.stats[i].score > bestScore) {
             bestcar = this.stats[i];
+            bestScore = bestcar.score
         }
     }
     return bestcar;
