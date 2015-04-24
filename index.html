@@ -80,6 +80,7 @@
     <script type="text/javascript" src="src/sim/simobject.js"></script>
     <script type="text/javascript" src="src/sim/car.js"></script>
     <script type="text/javascript" src="src/sim/adn.js"></script>
+    <script type="text/javascript" src="src/sim/referee.js"></script>
     <script type="text/javascript" src="src/sim/groundgenerators/main.js"></script>
     <script type="text/javascript" src="src/sim/groundgenerators/random.js"></script>
     <script type="text/javascript" src="src/sim/groundgenerators/wave.js"></script>
@@ -103,12 +104,18 @@
 </head>
 <body>
     <canvas id="canvas" width="800" height="500"></canvas>
+    <button id="replay">REPLAY</button>
 
     <script type="text/javascript">
         var world = new World();
         //world.groundGenerator = GroundGenerators.upupup();
         world.generateGround(200);
         var engine = new Engine(world);
+        var referee = new Referee(world);
+
+        document.getElementById('replay').onclick = function() {
+            console.log(referee.getBestCar());
+        };
 
         var statsLoop = function() {
             var adn = ADNGenerators.random();
@@ -117,6 +124,7 @@
             car.create();
 
             car.onend = function() {
+                referee.addCarToStats(car);
                 statsLoop();
             };
 
