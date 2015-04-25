@@ -17,7 +17,7 @@ Engine.prototype.mainLoop = function() {};
 // MAIN LOOP
 Engine.prototype.run = function() {
     // Physics step
-    this.world.b2World.Step(1/60, 1);
+    this.world.b2World.Step(1/40, 2);
     // Main loop
     this.mainLoop();
     // Draw

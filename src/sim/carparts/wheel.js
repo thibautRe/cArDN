@@ -9,7 +9,7 @@ Wheel.prototype.addJoint = function(b2Joint) {
 };
 
 Wheel.prototype.checkForces = function(world) {
-    if (this.b2Joint && this.b2Joint.GetReactionForce(1).Length() > 1000000) {
+    if (this.b2Joint && this.b2Joint.GetReactionForce(1).Length() > 2000000) {
         this.destroyJoint(world);
     }
 };
