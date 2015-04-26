@@ -22,3 +22,24 @@ SimObject.prototype.checkForces = function(world) {
 SimObject.prototype.destroy = function(world) {
     world.DestroySimObject(this);
 };
+
+SimObject.prototype.draw = function(engine) {
+    // draw outline shapes
+    if (this.imageSrc === undefined || engine.debugLines) {
+        if (this.b2Body === undefined) return;
+        for (var j = this.b2Body.GetShapeList(); j; j=j.m_next) {
+            if (j) {
+                engine.drawShape(j);
+            }
+        }
+    }
+
+    // draw image
+    if (!simO.image_loaded) return;
+    var pos = this.b2Body.GetCenterPosition();
+    var rot = this.b2Body.GetRotation();
+    var size = this.imageSize;
+    engine.drawImage(pos, rot, size, this.image);
+
+
+};

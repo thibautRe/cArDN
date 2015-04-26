@@ -49,7 +49,7 @@ Engine.prototype.drawWorld = function() {
                 }
             }
         }
-        this.drawSimObject(simO);
+        simO.draw(this);
     }
 }
 
@@ -139,15 +139,13 @@ Engine.prototype.drawJoint = function(joint) {
 };
 
 
-Engine.prototype.drawSimObject = function(simO) {
-    var pos = b2Math.SubtractVV(simO.b2Body.GetCenterPosition(), this.getCameraPosition());
-    var rot = simO.b2Body.GetRotation();
-    if (!simO.image_loaded) return;
+Engine.prototype.drawImage = function(pos, rot, size, image) {
+    var truePos = b2Math.SubtractVV(pos, this.getCameraPosition());
     this.context.save();
-    this.context.translate(pos.x, pos.y);
+    this.context.translate(truePos.x, truePos.y);
     this.context.rotate(rot);
-    this.context.scale(simO.imageSize.width/simO.image.width, simO.imageSize.height/simO.image.height);
-    this.context.translate(-simO.image.width/2, -simO.image.height/2);
-    this.context.drawImage(simO.image, 0, 0);
+    this.context.scale(size.width/image.width, size.height/image.height);
+    this.context.translate(-image.width/2, -image.height/2);
+    this.context.drawImage(image, 0, 0);
     this.context.restore();
 };
