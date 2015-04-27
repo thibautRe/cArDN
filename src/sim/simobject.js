@@ -41,5 +41,4 @@ SimObject.prototype.draw = function(engine) {
     var size = this.imageSize;
     engine.drawImage(pos, rot, size, this.image);
 
-
 };

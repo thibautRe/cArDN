@@ -54,7 +54,7 @@ Engine.prototype.drawWorld = function() {
 }
 
 Engine.prototype.drawShape = function(shape) {
-    this.context.strokeStyle = '#ffffff';
+    this.context.strokeStyle = '#5D5959';
     this.context.beginPath();
     switch (shape.m_type) {
     case b2Shape.e_circleShape:
@@ -106,7 +106,7 @@ Engine.prototype.drawJoint = function(joint) {
     var x2 = b2Math.SubtractVV(b2.m_position, this.getCameraPosition());
     var p1 = b2Math.SubtractVV(joint.GetAnchor1(), this.getCameraPosition());
     var p2 = b2Math.SubtractVV(joint.GetAnchor2(), this.getCameraPosition());
-    this.context.strokeStyle = '#00eeee';
+    this.context.strokeStyle = '#972626';
     this.context.beginPath();
     switch (joint.m_type) {
     case b2Joint.e_distanceJoint:
