@@ -119,11 +119,11 @@ Engine.prototype.drawJoint = function(joint) {
         break;
 
     default:
-        if (b1 == world.m_groundBody) {
+        if (b1 == this.world.m_groundBody) {
             this.context.moveTo(p1.x, p1.y);
             this.context.lineTo(x2.x, x2.y);
         }
-        else if (b2 == world.m_groundBody) {
+        else if (b2 == this.world.m_groundBody) {
             this.context.moveTo(p1.x, p1.y);
             this.context.lineTo(x1.x, x1.y);
         }

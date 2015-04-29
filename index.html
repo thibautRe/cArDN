@@ -1,5 +1,5 @@
 <!DOCTYPE>
-<html>
+<html ng-app="cArDN">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>CarDN</title>
@@ -74,7 +74,7 @@
     <script src='lib/box2d/dynamics/joints/b2RevoluteJoint.js'></script>
     <script src='lib/box2d/dynamics/joints/b2RevoluteJointDef.js'></script>
 
-        <!-- demos -->
+        <!-- cArDN simulation files -->
 
     <script type="text/javascript" src="src/sim/world.js"></script>
     <script type="text/javascript" src="src/sim/engine.js"></script>
@@ -89,6 +89,10 @@
     <script type="text/javascript" src="src/sim/adngenerators/main.js"></script>
     <script type="text/javascript" src="src/sim/adngenerators/random.js"></script>
     <script type="text/javascript" src="src/sim/carparts/wheel.js"></script>
+
+        <!-- cArDN front-end informatino files -->
+
+    <script type="text/javascript" src="src/front/main.js"></script>
     
 
     <style type="text/css">
@@ -105,21 +109,8 @@
 </head>
 <body>
     <canvas id="canvas" width="800" height="500"></canvas>
-    <button id="replay">REPLAY BEST</button>
-
-    <script type="text/javascript">
-        var world = new World();
-        //world.groundGenerator = GroundGenerators.upupup();
-        world.generateGround(200);
-        var engine = new Engine(world);
-        var referee = new Referee(world, engine);
-
-        document.getElementById('replay').onclick = function() {
-            referee.replayBestCar();
-        };
-
-        referee.tournament();
-        engine.run();
-    </script>
+    <div ng-controller="simulation">
+        <button ng-click="runBestCar()">REPLAY BEST</button>
+    </div>
 </body>
 </html>
